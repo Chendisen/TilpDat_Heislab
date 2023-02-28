@@ -26,6 +26,6 @@ typedef struct{
 DoorHandler makeDoorHandler();
 
 
-void openDoor(DoorHandler *DoorHandlerPtr);
-void closeDoor(DoorHandler *DoorHandlerPtr);
-void setObstruction(DoorHandler *DoorHandlerPtr, Bool obstruction);
+void openDoor(DoorHandler *doorHandlerPtr);
+void closeDoor(DoorHandler *doorHandlerPtr);
+void setObstruction(DoorHandler *doorHandlerPtr, Bool obstruction);

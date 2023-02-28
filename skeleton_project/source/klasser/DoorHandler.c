@@ -10,14 +10,14 @@ DoorHandler makeDoorHandler(){
     return newDoorHandler;
 }
 
-void openDoor(DoorHandler *DoorHandlerPtr){
-    DoorHandlerPtr->currentDoorState = OPEN;
+void openDoor(DoorHandler *doorHandlerPtr){
+    doorHandlerPtr->currentDoorState = OPEN;
 }
 
-void closeDoor(DoorHandler *DoorHandlerPtr){
-    DoorHandlerPtr->currentDoorState = CLOSED;
+void closeDoor(DoorHandler *doorHandlerPtr){
+    doorHandlerPtr->currentDoorState = CLOSED;
 }
 
-void setObstruction(DoorHandler *DoorHandlerPtr, Bool obstruction){
-    DoorHandlerPtr->obstruction = obstruction;
+void setObstruction(DoorHandler *doorHandlerPtr, Bool obstruction){
+    doorHandlerPtr->obstruction = obstruction;
 }
