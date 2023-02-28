@@ -1,5 +1,8 @@
 #include "Timer.h"
 
-void startTimer(int seconds){
-    
+Timer makeTimer(int seconds){
+    Timer newTimer;
+    newTimer.seconds = seconds;
+
+    return newTimer;
 }

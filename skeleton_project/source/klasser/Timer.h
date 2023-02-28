@@ -3,15 +3,14 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
-#include "driver/elevio.h"
+#include "../driver/elevio.h"
 
-struct Timer{
+
+typedef struct{
     int seconds;
-    void (*startTimerPtr)(int seconds);
-    void (*resetTimerPtr)();
-};
+} Timer;
 
-struct Timer makeTimer(int seconds){};
+Timer makeTimer(int seconds);
 
-void startTimer(int seconds);
-void resetTimer();
+void startTimer(Timer *TimerPtr);
+void resetTimer(Timer *TimerPtr);
