@@ -5,19 +5,12 @@
 #include <time.h>
 #include "../driver/elevio.h"
 #include "Order.h"
+#include "Elevator.h"
 
 typedef enum {
     INSIDE, 
     OUTSIDE
 } LightType;
-
-typedef enum {
-    NONE, 
-    FIRST,
-    SECOND, 
-    THIRD, 
-    FOURTH
-} Floor;
 
 typedef struct {
     LightType lightType;

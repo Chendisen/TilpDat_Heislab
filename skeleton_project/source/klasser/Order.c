@@ -1,7 +1,7 @@
 #include "Order.h"
 
 
-Order makeOrder(int floorF, int floorT, MotorDirection moveD){
+Order makeOrder(int floorF, int floorT, Direction moveD){
     Order newOrder;
     
     newOrder.floorFrom = floorF;
