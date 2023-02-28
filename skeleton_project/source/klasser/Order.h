@@ -5,18 +5,16 @@
 #include <time.h>
 #include "driver/elevio.h"
 
-typedef struct Order{
+typedef struct {
     int floorFrom;
     int floorTo;
     MotorDirection moveDirection;
 
-    Order* nextOrder = nullptr;
-    Order* prevOrder = nullptr;
-
-    void (*setNextOrder)(Order* nextOrder, Order& thisOrder);
-    void (*setPrevOrder)(Order* PrevOrder, Order& thisOrder);
+    Order* nextOrder;
+    Order* prevOrder;
 }Order;
 
-void setNextOrder(Order* next, Order& this);
+void setNextOrder(Order* next, Order* this);
+void setPrevOrder(Order* prev, Order* this);
 
-
+Order makeOrder(int floorF, int floorT, MotorDirection moveD, Order* next, Order* prev);
