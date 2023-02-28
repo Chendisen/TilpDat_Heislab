@@ -21,6 +21,8 @@ typedef struct {
     Bool emergencyButton;
 } Elevator;
 
+Elevator makeElevator(Floor current, Floor desired, MotorDirection dir, Bool emergency);
+
 void setCurrentFloor(Elevator* elevatorPtr, Floor floor);
 void setDesiredFloor(Elevator* elevatorPtr, Floor floor);
 void finishedDesiedFloor(Elevator* elevatorPtr);
