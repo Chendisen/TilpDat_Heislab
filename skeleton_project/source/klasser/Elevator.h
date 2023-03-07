@@ -17,6 +17,5 @@ Elevator makeElevator(Floor current, Floor desired, MotorDirection dir, Bool eme
 
 void setCurrentFloor(Elevator* elevatorPtr, Floor floor);
 void setDesiredFloor(Elevator* elevatorPtr, Floor floor);
-void finishedDesiedFloor(Elevator* elevatorPtr);
 void startEmergency(Elevator* elevatorPtr);
 void stopeEmergency(Elevator* elevatorPtr);

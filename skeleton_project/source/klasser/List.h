@@ -11,3 +11,6 @@ typedef struct {
     Node* next;
 } Node;
 
+void insertAtNth(Node** head, Order newOrder, int n);
+Bool removeFirstNode(Node** head);
+void clearList(Node** head);

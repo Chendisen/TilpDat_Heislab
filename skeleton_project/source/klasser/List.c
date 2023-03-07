@@ -41,22 +41,22 @@ void insertAtNth(Node** head, Order newOrder, int n){
     temp->next = newNode;
 }
 
-int removeFirstNode(Node** head){
+Bool removeFirstNode(Node** head){
     if(*head == NULL){
         printf("The linked list is empty!");
-        return 0;
+        return FALSE;
     }
 
     Node* temp = *head;
     *head = (*head)->next;
     free(temp);
 
-    return 1;
+    return TRUE;
 }
 
 void clearList(Node** head){
-    int check = removeFirstNode(head);
-    while(check){
+    Bool check = removeFirstNode(head);
+    while((int)check){
         check = removeFirstNode(head);
     }
 }
