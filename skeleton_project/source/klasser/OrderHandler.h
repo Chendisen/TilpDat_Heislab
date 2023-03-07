@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
+#include "../driver/elevio.h"
 #include "Order.h"
 
-struct OrderListEl{
-    Order* next;
-    Order now;
-    Order* prev;
-};
+typedef struct {
+    Order thisOrder;
+    Node* next;
+} Node;
 
-class OrderHandler{
-    
-};
+void insertAtNth(Node** head, Order newOrder, int n);
+Bool removeFirstNode(Node** head);
+void clearList(Node** head);
