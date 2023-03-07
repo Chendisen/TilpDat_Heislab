@@ -18,6 +18,20 @@ typedef enum {
     BUTTON_CAB          = 2
 } ButtonType;
 
+typedef enum {
+    FALSE   = 0,
+    TRUE    = 1
+} Bool;
+
+typedef enum {
+    NONE = -1, 
+    FIRST = 1,
+    SECOND = 2, 
+    THIRD = 3, 
+    FOURTH = 4
+} Floor;
+
+
 
 void elevio_init(void);
 

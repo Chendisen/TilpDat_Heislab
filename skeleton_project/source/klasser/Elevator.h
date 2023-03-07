@@ -6,14 +6,6 @@
 #include "../driver/elevio.h"
 #include "DoorHandler.h"
 
-typedef enum {
-    NONE = -1, 
-    FIRST = 1,
-    SECOND = 2, 
-    THIRD = 3, 
-    FOURTH = 4
-} Floor;
-
 typedef struct {
     Floor currentFloor;
     Floor desiredFloor;

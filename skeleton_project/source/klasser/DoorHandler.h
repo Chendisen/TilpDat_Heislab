@@ -11,11 +11,6 @@ typedef enum{
     CLOSED
 } DoorState;
 
-typedef enum{
-    TRUE,
-    FALSE
-} Bool;
-
 typedef struct{
     DoorState currentDoorState;
     Bool obstruction;

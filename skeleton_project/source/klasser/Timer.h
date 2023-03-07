@@ -8,9 +8,11 @@
 
 typedef struct{
     int seconds;
+    clock_t startTime;
 } Timer;
 
 Timer makeTimer(int seconds);
 
-void startTimer(Timer *TimerPtr);
-void resetTimer(Timer *TimerPtr);
+void startTimer(Timer *timerPtr);
+void resetTimer(Timer *timerPtr);
+Bool checkTimer(Timer *timerPtr);
