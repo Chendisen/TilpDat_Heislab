@@ -10,12 +10,10 @@ typedef struct {
     Floor currentFloor;
     Floor desiredFloor;
     MotorDirection direction;
-    Bool emergencyButton;
 } Elevator;
 
-Elevator makeElevator(Floor current, Floor desired, MotorDirection dir, Bool emergency);
+Elevator makeElevator(Floor current, Floor desired, MotorDirection dir);
 
 void setCurrentFloor(Elevator* elevatorPtr, Floor floor);
 void setDesiredFloor(Elevator* elevatorPtr, Floor floor);
 void startEmergency(Elevator* elevatorPtr);
-void stopeEmergency(Elevator* elevatorPtr);

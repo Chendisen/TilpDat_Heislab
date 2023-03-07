@@ -5,6 +5,7 @@
 #include <time.h>
 #include "../driver/elevio.h"
 #include "Order.h"
+#include "Elevator.h"
 
 typedef struct {
     Order thisOrder;
