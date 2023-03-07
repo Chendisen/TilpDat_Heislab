@@ -59,4 +59,4 @@ void clearList(Node** head){
     while((int)check){
         check = removeFirstNode(head);
     }
-}
+} 

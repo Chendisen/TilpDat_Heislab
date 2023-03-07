@@ -23,4 +23,4 @@ DoorHandler makeDoorHandler();
 
 void openDoor(DoorHandler *doorHandlerPtr);
 void closeDoor(DoorHandler *doorHandlerPtr);
-void setObstruction(DoorHandler *doorHandlerPtr, Bool obstruction);
+void setObstruction(DoorHandler *doorHandlerPtr, Bool obstruction); 

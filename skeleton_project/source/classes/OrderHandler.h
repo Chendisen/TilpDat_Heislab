@@ -14,4 +14,4 @@ typedef struct Node{
 
 void insertAtNth(Node** head, Order newOrder, int n);
 Bool removeFirstNode(Node** head);
-void clearList(Node** head);
+void clearList(Node** head); 

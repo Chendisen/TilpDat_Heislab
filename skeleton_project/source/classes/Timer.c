@@ -22,7 +22,7 @@ Bool checkTimer(Timer *timerPtr){
     }
 
     clock_t currentTime = clock();
-    if (difftime(timerPtr->startTime, currentTime) > timerPtr->seconds){
+    if (difftime(currentTime, timerPtr->startTime) > timerPtr->seconds){
         timerPtr->startTime = 0.0;
 
         return TRUE;

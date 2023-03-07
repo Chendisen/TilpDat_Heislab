@@ -15,4 +15,4 @@ void lightsOn(Order* order){
 
 void lightsOff(Order* order){
     elevio_buttonLamp((int)(order->floor), order->buttonType, 0);
-}
+} 

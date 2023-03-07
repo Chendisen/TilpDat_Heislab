@@ -23,6 +23,8 @@ int main(){
     Timer timer = makeTimer(DOOR_TIME);
     FloorLight floorLight = makeFloorLight();
     Node* currentOrder = NULL;
+    Bool timerStarted = FALSE;
+    Bool emergencyTriggered = FALSE;
 
     initiateElevator(&elevator); //Brings the elevator to a floor, and sets elevators current floor
     floorLightsOn(elevator.currentFloor, &floorLight); //Turns on the outside floorlight for that floor
@@ -31,24 +33,65 @@ int main(){
 
 
     while(1){
-        for(int floor = (int)FIRST-1; floor <= (int)FOURTH-1; floor++){
+        while(elevio_stopButton()){ //Checks if emergency button is held down
+            int i = 0;
+            if(!i){ //Checks if we're in the first iteration, to make sure that the following functions dont run unnecessarily
+                clearList(&currentOrder); //Clears the list of orders
+                setDesiredFloor(&elevator, NONE); //Clears desired floor
+                setCurrentFloor(&elevator, (Floor)elevio_floorSensor()); //Sets current floor
+                if(elevio_floorSensor() != -1){
+                    openDoor(&doorHandler);
+                }
+                emergencyTriggered = TRUE;
+            }
+            i++;
+        }
+
+        for(int floor = (int)FIRST-1; floor <= (int)FOURTH-1; floor++){ //Iterating through all the buttons
             for(int buttonType = BUTTON_HALL_UP; buttonType <= BUTTON_CAB; buttonType++){
-                printf("%d", elevio_callButton(floor, buttonType));
-                if(elevio_callButton(floor, buttonType)){
-                    Order newOrder = makeOrder(buttonType, floor); 
-                    lightsOn(&newOrder);
-                    insertAtNth(&currentOrder, newOrder, -1); // Adds all new orders to the list, and turns on lights
+                if(elevio_callButton(floor, buttonType)){ //Checks if a button is pushed
+                    Order newOrder = makeOrder(buttonType, floor); //Makes a new order with correct floor and button type
+                    lightsOn(&newOrder);  //Turns on the button lights for the order
+                    insertAtNth(&currentOrder, newOrder, -1); // Adds the new orders to the list
                 }
             }
         }
+        
+        if(emergencyTriggered && currentOrder != NULL){ //If we just had an emergency and, and we now have a new order 
+            if(elevio_floorSensor() != -1){   
+                startTimer(&timer);
+                timerStarted = TRUE;
+            }
+            initiateElevator(&elevator);
+            floorLightsOn(elevator.currentFloor, &floorLight);
+            emergencyTriggered = FALSE;
+        }
 
-        if (currentOrder != NULL){
+        if(currentOrder != NULL && doorHandler.currentDoorState == CLOSED){
             setDesiredFloor(&elevator, currentOrder->thisOrder.floor); //Changes the elevators desired floor to the orders target floor
             setMotorDirection(&elevator); //Sets elevator motor direction based on elevators current- and desired floor
         }
 
+        if(elevio_floorSensor() != -1){ //Checks if we ar in a specific floor
+            setCurrentFloor(&elevator, (Floor)(elevio_floorSensor())); //Sets the elevators current floor to that floor
+            floorLightsOn((Floor)elevio_floorSensor(), &floorLight); //Turns on the outside floorlights for that floor
+        }
 
+        if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && !timerStarted){
+            openDoor(&doorHandler);
+            startTimer(&timer);
+            timerStarted = TRUE;
+        }
 
+        if(checkTimer(&timer)){
+            if(!doorHandler.obstruction){
+                closeDoor(&doorHandler);
+            }
+    
+            lightsOff(&currentOrder->thisOrder);
+            removeFirstNode(&currentOrder);
+            timerStarted = FALSE;
+        }
 
     }
 

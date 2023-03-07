@@ -10,7 +10,13 @@ Elevator makeElevator(){
 }
 
 void initiateElevator(Elevator* elevator){
+    if(elevio_floorSensor() != -1){
+        elevator->currentFloor = (Floor)elevio_floorSensor();
+        return;
+    }
+
     elevio_motorDirection(DIRN_DOWN);
+
     while(1){
         if(elevio_floorSensor() != -1){
             elevio_motorDirection(DIRN_STOP);
@@ -18,7 +24,7 @@ void initiateElevator(Elevator* elevator){
             return;
         }
     }
-}
+} 
 
 void setCurrentFloor(Elevator* elevatorPtr, Floor newCurrentFloor){
     elevatorPtr->currentFloor = newCurrentFloor;
@@ -33,14 +39,14 @@ void startEmergency(Elevator* elevatorPtr){
 };
 
 void setMotorDirection(Elevator* elevatorPtr){
-    if(elevatorPtr->currentFloor > elevatorPtr->desiredFloor){
+    if(elevatorPtr->desiredFloor == NONE || elevatorPtr->desiredFloor == elevatorPtr->currentFloor){
+        elevatorPtr->direction = DIRN_STOP;
+    }
+    else if(elevatorPtr->currentFloor > elevatorPtr->desiredFloor){
         elevatorPtr->direction = DIRN_DOWN;
     }
-    else if(elevatorPtr->currentFloor < elevatorPtr->desiredFloor){
+    else(elevatorPtr->currentFloor < elevatorPtr->desiredFloor){
         elevatorPtr->direction = DIRN_UP;
-    }
-    else {
-        elevatorPtr->direction = DIRN_STOP;
     }
     
     elevio_motorDirection(elevatorPtr->direction);

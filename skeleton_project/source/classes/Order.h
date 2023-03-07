@@ -15,4 +15,4 @@ typedef struct {
 Order makeOrder(ButtonType buttonType, Floor floor);
 
 void lightsOn(Order* order);
-void lightsOff(Order* order);
+void lightsOff(Order* order); 

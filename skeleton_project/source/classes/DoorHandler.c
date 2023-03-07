@@ -23,3 +23,4 @@ void closeDoor(DoorHandler *doorHandlerPtr){
 void setObstruction(DoorHandler *doorHandlerPtr, Bool obstruction){
     doorHandlerPtr->obstruction = obstruction;
 }
+ 
