@@ -22,22 +22,37 @@ int main(){
     DoorHandler doorHandler = makeDoorHandler();
     Timer timer = makeTimer(DOOR_TIME);
     FloorLight floorLight = makeFloorLight();
+    Node* currentOrder = NULL;
 
-    initiateElevator(&elevator);
+    initiateElevator(&elevator); //Brings the elevator to a floor, and sets elevators current floor
+    floorLightsOn(elevator.currentFloor, &floorLight); //Turns on the outside floorlight for that floor
 
     printf("=== Elevator has been initiated ===\n");
 
 
-    /*while(1){
-        for(int floor = (int)FIRST; floor <= (int)FOURTH; floor++){
+    while(1){
+        for(int floor = (int)FIRST-1; floor <= (int)FOURTH-1; floor++){
             for(int buttonType = BUTTON_HALL_UP; buttonType <= BUTTON_CAB; buttonType++){
+                printf("%d", elevio_callButton(floor, buttonType));
                 if(elevio_callButton(floor, buttonType)){
-
+                    Order newOrder = makeOrder(buttonType, floor); 
+                    lightsOn(&newOrder);
+                    insertAtNth(&currentOrder, newOrder, -1); // Adds all new orders to the list, and turns on lights
                 }
             }
         }
+
+        if (currentOrder != NULL){
+            setDesiredFloor(&elevator, currentOrder->thisOrder.floor); //Changes the elevators desired floor to the orders target floor
+            setMotorDirection(&elevator); //Sets elevator motor direction based on elevators current- and desired floor
+        }
+
+
+
+
     }
 
+    /*
     elevio_motorDirection(DIRN_UP);
 
     while(1){

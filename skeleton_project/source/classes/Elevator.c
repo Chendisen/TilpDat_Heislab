@@ -33,5 +33,15 @@ void startEmergency(Elevator* elevatorPtr){
 };
 
 void setMotorDirection(Elevator* elevatorPtr){
+    if(elevatorPtr->currentFloor > elevatorPtr->desiredFloor){
+        elevatorPtr->direction = DIRN_DOWN;
+    }
+    else if(elevatorPtr->currentFloor < elevatorPtr->desiredFloor){
+        elevatorPtr->direction = DIRN_UP;
+    }
+    else {
+        elevatorPtr->direction = DIRN_STOP;
+    }
+    
     elevio_motorDirection(elevatorPtr->direction);
 }
