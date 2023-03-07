@@ -12,8 +12,10 @@ typedef struct {
     MotorDirection direction;
 } Elevator;
 
-Elevator makeElevator(Floor current, Floor desired, MotorDirection dir);
+Elevator makeElevator();
 
+void initiateElevator();
 void setCurrentFloor(Elevator* elevatorPtr, Floor floor);
 void setDesiredFloor(Elevator* elevatorPtr, Floor floor);
 void startEmergency(Elevator* elevatorPtr);
+void setMotorDirection(Elevator* elevatorPtr);

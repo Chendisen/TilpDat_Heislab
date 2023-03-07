@@ -6,9 +6,10 @@
 #include "../driver/elevio.h"
 #include "Order.h"
 
-typedef struct {
+
+typedef struct Node{
     Order thisOrder;
-    Node* next;
+    struct Node* next;
 } Node;
 
 void insertAtNth(Node** head, Order newOrder, int n);

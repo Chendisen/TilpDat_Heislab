@@ -1,8 +1,8 @@
 #include "FloorLight.h"
 
-FloorLight makeFloorLight(Floor currentFloor){
+FloorLight makeFloorLight(){
     FloorLight newFloorLight;
-    newFloorLight.currentLight = currentFloor;
+    newFloorLight.currentLight = NONE;
 
     return newFloorLight;
 }

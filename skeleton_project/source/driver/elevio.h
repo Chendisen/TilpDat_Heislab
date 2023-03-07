@@ -31,6 +31,8 @@ typedef enum {
     FOURTH = 4
 } Floor;
 
+#define DOOR_TIME 3
+
 
 
 void elevio_init(void);

@@ -11,6 +11,6 @@ typedef struct{
     Floor currentLight;
 } FloorLight;
 
-FloorLight makeFloorLight(Floor currentFloor);
+FloorLight makeFloorLight();
 
 void floorLightsOn(Floor currentFloor, FloorLight *floorLightPtr);

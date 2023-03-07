@@ -3,14 +3,40 @@
 #include <signal.h>
 #include <time.h>
 #include "driver/elevio.h"
-
+#include "classes/DoorHandler.h"
+#include "classes/Elevator.h"
+#include "classes/FloorLight.h"
+#include "classes/Order.h"
+#include "classes/OrderHandler.h"
+#include "classes/Timer.h"
 
 
 int main(){
     elevio_init();
     
-    printf("=== Example Program ===\n");
-    printf("Press the stop button on the elevator panel to exit\n");
+
+    printf("=== Welcome to the Elevator Program ===\n");
+    printf("=== Initiating Elevator ===\n");
+
+    Elevator elevator = makeElevator();
+    DoorHandler doorHandler = makeDoorHandler();
+    Timer timer = makeTimer(DOOR_TIME);
+    FloorLight floorLight = makeFloorLight();
+
+    initiateElevator(&elevator);
+
+    printf("=== Elevator has been initiated ===\n");
+
+
+    /*while(1){
+        for(int floor = (int)FIRST; floor <= (int)FOURTH; floor++){
+            for(int buttonType = BUTTON_HALL_UP; buttonType <= BUTTON_CAB; buttonType++){
+                if(elevio_callButton(floor, buttonType)){
+
+                }
+            }
+        }
+    }
 
     elevio_motorDirection(DIRN_UP);
 
@@ -46,7 +72,7 @@ int main(){
         }
         
         nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
-    }
+    }*/
 
     return 0;
 }
