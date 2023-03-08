@@ -7,8 +7,8 @@
 #include "classes/Elevator.h"
 #include "classes/FloorLight.h"
 #include "classes/Order.h"
-#include "classes/OrderHandler.h"
 #include "classes/Timer.h"
+#include "classes/OrderHandler.h"
 
 
 int main(){
