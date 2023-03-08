@@ -45,7 +45,7 @@ void setMotorDirection(Elevator* elevatorPtr){
     else if(elevatorPtr->currentFloor > elevatorPtr->desiredFloor){
         elevatorPtr->direction = DIRN_DOWN;
     }
-    else(elevatorPtr->currentFloor < elevatorPtr->desiredFloor){
+    else if(elevatorPtr->currentFloor < elevatorPtr->desiredFloor){
         elevatorPtr->direction = DIRN_UP;
     }
     
