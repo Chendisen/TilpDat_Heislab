@@ -1,15 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <signal.h>
-#include <time.h>
 #include "driver/elevio.h"
 #include "classes/DoorHandler.h"
 #include "classes/Elevator.h"
 #include "classes/FloorLight.h"
 #include "classes/Order.h"
-#include "classes/Timer.h"
 #include "classes/OrderHandler.h"
-
+#include "classes/Timer.h"
+ 
 
 int main(){
     elevio_init();
