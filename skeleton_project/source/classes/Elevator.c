@@ -51,3 +51,8 @@ void setMotorDirection(Elevator* elevatorPtr){
     
     elevio_motorDirection(elevatorPtr->direction);
 }
+
+void emergencyStop(Elevator* elevatorPtr){
+    elevatorPtr->direction = DIRN_STOP;
+    elevio_motorDirection(elevatorPtr->direction);
+}
