@@ -47,7 +47,9 @@ int main(){
                 lightsOff(&currentOrder->thisOrder); // Iterates through the list and turns off lights and removes every order
                 Bool check = removeFirstNode(&currentOrder);
                 while(check == TRUE){
-                    lightsOff(&currentOrder->thisOrder);
+                    if(currentOrder != NULL){
+                        lightsOff(&currentOrder->thisOrder);
+                    }
                     check = removeFirstNode(&currentOrder);
                 }
 
