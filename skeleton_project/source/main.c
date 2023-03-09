@@ -58,9 +58,9 @@ int main(){
         }
         
         if(emergencyTriggered && currentOrder != NULL){ //If we just had an emergency and, and we now have a new order 
-            if(elevio_floorSensor() != -1){   
-                startTimer(&timer);
-                timerStarted = TRUE;
+            if(elevio_floorSensor() != -1){  //If we are already in a floor, the door should open for 3 seconds
+                startTimer(&timer); //Starts the countdown
+                timerStarted = TRUE; //
             }
             initiateElevator(&elevator);
             floorLightsOn(elevator.currentFloor, &floorLight);
