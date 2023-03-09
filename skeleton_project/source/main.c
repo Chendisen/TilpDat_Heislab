@@ -44,7 +44,9 @@ int main(){
             if(i == 0){ //Checks if we're in the first iteration, to make sure that the following functions dont run unnecessarily
                 emergencyStop(&elevator); // Elevator stops
 
-                lightsOff(&currentOrder->thisOrder); // Iterates through the list and turns off lights and removes every order
+                if(currentOrder != NULL){ // Iterates through the list and turns off lights and removes every order
+                    lightsOff(&currentOrder->thisOrder);
+                } 
                 Bool check = removeFirstNode(&currentOrder);
                 while(check == TRUE){
                     if(currentOrder != NULL){
