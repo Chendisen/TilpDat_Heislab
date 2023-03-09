@@ -74,7 +74,7 @@ int main(){
             floorLightsOn((Floor)elevio_floorSensor(), &floorLight); //Turns on the outside floorlights for that floor
         }
 
-        if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && !timerStarted){
+        if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && timerStarted == FALSE){
             openDoor(&doorHandler);
             startTimer(&timer);
             timerStarted = TRUE;
