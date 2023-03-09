@@ -42,12 +42,19 @@ int main(){
         while(elevio_stopButton() == 1){ //Checks if emergency button is held down
             int i = 0;
             if(i == 0){ //Checks if we're in the first iteration, to make sure that the following functions dont run unnecessarily
-                emergencyStop(&elevator);
-                clearList(&currentOrder); //Clears the list of orders
-                setDesiredFloor(&elevator, NONE); //Clears desired floor
-                setCurrentFloor(&elevator, (Floor)elevio_floorSensor()); //Sets current floor
-                if(elevio_floorSensor() != -1){
-                    openDoor(&doorHandler);
+                emergencyStop(&elevator); // Elevator stops
+
+                lightsOff(&currentOrder->thisOrder); // Iterates through the list and turns off lights and removes every order
+                Bool check = removeFirstNode(&currentOrder);
+                while(check == TRUE){
+                    lightsOff(&currentOrder->thisOrder);
+                    check = removeFirstNode(&currentOrder);
+                }
+
+                setDesiredFloor(&elevator, NONE); // Clears desired floor
+                setCurrentFloor(&elevator, (Floor)elevio_floorSensor()); // Sets current floor
+                if(elevio_floorSensor() != -1){ // Opens door if we're not between floors
+                    openDoor(&doorHandler); 
                 }
                 emergencyTriggered = TRUE;
             }
@@ -66,13 +73,13 @@ int main(){
         
 
 
-        if(emergencyTriggered == TRUE && currentOrder != NULL){ //If we just had an emergency and, and we now have a new order 
-            if(elevio_floorSensor() != -1){   
+        if(emergencyTriggered == TRUE && currentOrder != NULL){ // If we just had an emergency and we now have a new order 
+            if(elevio_floorSensor() != -1 && doorHandler.currentDoorState == OPEN){ // Starts timer if we're in a floor and door is open. 
                 startTimer(&timer);
                 //timerStarted = TRUE;
             }
-            initiateElevator(&elevator);
-            floorLightsOn(elevator.currentFloor, &floorLight);
+            initiateElevator(&elevator); // Gets elevator to known state, nothing happens if we're already in known state
+            floorLightsOn(elevator.currentFloor, &floorLight); 
             emergencyTriggered = FALSE;
         }
 
@@ -81,20 +88,20 @@ int main(){
             setMotorDirection(&elevator); //Sets elevator motor direction based on elevators current- and desired floor
         }
 
-        if(elevio_floorSensor() != -1){ //Checks if we ar in a specific floor
+        if(elevio_floorSensor() != -1){ //Checks if we are in a specific floor
             setCurrentFloor(&elevator, (Floor)(elevio_floorSensor())); //Sets the elevators current floor to that floor
             floorLightsOn((Floor)elevio_floorSensor(), &floorLight); //Turns on the outside floorlights for that floor
         }
 
-        if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && doorHandler.currentDoorState == CLOSED){
+        if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && doorHandler.currentDoorState == CLOSED){ // In desired floor and door is closed
             openDoor(&doorHandler);
             startTimer(&timer);
-            setMotorDirection(&elevator);
+            setMotorDirection(&elevator); // Stops motor
             //timerStarted = TRUE;
         }
 
-        if(checkTimer(&timer) == TRUE){
-            if(doorHandler.obstruction == FALSE){
+        if(checkTimer(&timer) == TRUE){ // Cheks if timer has run out
+            if(doorHandler.obstruction == FALSE){ // Checks if obstruction is set
                 closeDoor(&doorHandler);
             }
     
