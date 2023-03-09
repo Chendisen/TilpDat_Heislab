@@ -104,11 +104,19 @@ int main(){
             //timerStarted = TRUE;
         }
 
-        if(checkTimer(&timer) == TRUE){ // Cheks if timer has run out
-            if(doorHandler.obstruction == FALSE){ // Checks if obstruction is set
-                closeDoor(&doorHandler);
+        if (elevio_obstruction == 1){ // Checks if obstruction is set
+            doorHandler.obstruction == TRUE;
+
+            if(doorHandler.currentDoorState == OPEN){ // If door is open at the same time, the timer resets
+                resetTimer(&timer);
             }
-    
+        }
+        if (elevio_obstruction == 0){
+            doorHandler.obstruction == FALSE;
+        }
+
+        if(checkTimer(&timer) == TRUE){ // Cheks if timer has run out and resets it if it has
+            closeDoor(&doorHandler);
             lightsOff(&currentOrder->thisOrder);
             removeFirstNode(&currentOrder);
             //timerStarted = FALSE;
