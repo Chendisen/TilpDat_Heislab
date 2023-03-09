@@ -1,15 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <signal.h>
-#include <time.h>
 #include "driver/elevio.h"
 #include "classes/DoorHandler.h"
 #include "classes/Elevator.h"
 #include "classes/FloorLight.h"
 #include "classes/Order.h"
-#include "classes/Timer.h"
 #include "classes/OrderHandler.h"
-
+#include "classes/Timer.h"
+ 
 
 int main(){
     elevio_init();
@@ -18,12 +15,21 @@ int main(){
     printf("=== Welcome to the Elevator Program ===\n");
     printf("=== Initiating Elevator ===\n");
 
+    /*int ** matrix;
+
+    for(int i = 0; i < 4; i++){
+        matrix[i] = malloc(sizeof(int*) * 3);
+        for(int j = 0; j < 3; j++){
+            *matrix[i] = malloc(sizeof(int) *3 );
+        }
+    }*/
+
     Elevator elevator = makeElevator();
     DoorHandler doorHandler = makeDoorHandler();
     Timer timer = makeTimer(DOOR_TIME);
     FloorLight floorLight = makeFloorLight();
     Node* currentOrder = NULL;
-    Bool timerStarted = FALSE;
+    //Bool timerStarted = FALSE;
     Bool emergencyTriggered = FALSE;
 
     initiateElevator(&elevator); //Brings the elevator to a floor, and sets elevators current floor
@@ -33,9 +39,10 @@ int main(){
 
 
     while(1){
-        while(elevio_stopButton()){ //Checks if emergency button is held down
+        while(elevio_stopButton() == 1){ //Checks if emergency button is held down
             int i = 0;
-            if(!i){ //Checks if we're in the first iteration, to make sure that the following functions dont run unnecessarily
+            if(i == 0){ //Checks if we're in the first iteration, to make sure that the following functions dont run unnecessarily
+                emergencyStop(&elevator);
                 clearList(&currentOrder); //Clears the list of orders
                 setDesiredFloor(&elevator, NONE); //Clears desired floor
                 setCurrentFloor(&elevator, (Floor)elevio_floorSensor()); //Sets current floor
@@ -57,10 +64,12 @@ int main(){
             }
         }
         
-        if(emergencyTriggered && currentOrder != NULL){ //If we just had an emergency and, and we now have a new order 
-            if(elevio_floorSensor() != -1){  //If we are already in a floor, the door should open for 3 seconds
-                startTimer(&timer); //Starts the countdown
-                timerStarted = TRUE; //
+
+
+        if(emergencyTriggered == TRUE && currentOrder != NULL){ //If we just had an emergency and, and we now have a new order 
+            if(elevio_floorSensor() != -1){   
+                startTimer(&timer);
+                //timerStarted = TRUE;
             }
             initiateElevator(&elevator);
             floorLightsOn(elevator.currentFloor, &floorLight);
@@ -77,20 +86,21 @@ int main(){
             floorLightsOn((Floor)elevio_floorSensor(), &floorLight); //Turns on the outside floorlights for that floor
         }
 
-        if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && !timerStarted){
+        if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && doorHandler.currentDoorState == CLOSED){
             openDoor(&doorHandler);
             startTimer(&timer);
-            timerStarted = TRUE;
+            setMotorDirection(&elevator);
+            //timerStarted = TRUE;
         }
 
-        if(checkTimer(&timer)){
-            if(!doorHandler.obstruction){
+        if(checkTimer(&timer) == TRUE){
+            if(doorHandler.obstruction == FALSE){
                 closeDoor(&doorHandler);
             }
     
             lightsOff(&currentOrder->thisOrder);
             removeFirstNode(&currentOrder);
-            timerStarted = FALSE;
+            //timerStarted = FALSE;
         }
 
     }

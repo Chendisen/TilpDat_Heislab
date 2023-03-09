@@ -1,8 +1,6 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
-#include <time.h>
 #include "../driver/elevio.h"
 #include "Elevator.h"
 
@@ -14,3 +12,4 @@ typedef struct{
 FloorLight makeFloorLight();
 
 void floorLightsOn(Floor currentFloor, FloorLight *floorLightPtr); 
+

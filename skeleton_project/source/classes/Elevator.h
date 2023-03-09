@@ -1,8 +1,6 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
-#include <time.h>
 #include "../driver/elevio.h"
 #include "DoorHandler.h"
 
@@ -19,4 +17,5 @@ void setCurrentFloor(Elevator* elevatorPtr, Floor floor);
 void setDesiredFloor(Elevator* elevatorPtr, Floor floor);
 void startEmergency(Elevator* elevatorPtr);
 void setMotorDirection(Elevator* elevatorPtr);
+void emergencyStop(Elevator* elevatorPtr);
  
