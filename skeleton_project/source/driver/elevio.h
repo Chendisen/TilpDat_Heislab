@@ -25,10 +25,10 @@ typedef enum {
 
 typedef enum {
     NONE = -1, 
-    FIRST = 1,
-    SECOND = 2, 
-    THIRD = 3, 
-    FOURTH = 4
+    FIRST = 0,
+    SECOND = 1, 
+    THIRD = 2, 
+    FOURTH = 3
 } Floor;
 
 #define DOOR_TIME 3

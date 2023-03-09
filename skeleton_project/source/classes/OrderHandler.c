@@ -43,7 +43,7 @@ void insertAtNth(Node** head, Order newOrder, int n){
 
 Bool removeFirstNode(Node** head){
     if(*head == NULL){
-        printf("The linked list is empty!");
+        printf("The linked list is empty!\n");
         return FALSE;
     }
 
@@ -54,9 +54,14 @@ Bool removeFirstNode(Node** head){
     return TRUE;
 }
 
-void clearList(Node** head){
-    Bool check = removeFirstNode(head);
-    while((int)check){
-        check = removeFirstNode(head);
-    }
-} 
+Bool checkButtonPressed(int floor, int buttonType, int buttonArray[]){
+    return (Bool)buttonArray[floor*3 + buttonType];
+}
+
+void setButtonPressed(int floor, int buttonType, int buttonArray[]){
+    buttonArray[floor*3 + buttonType] = 1;
+}
+
+void clearButtonPressed(int floor, int buttonType, int buttonArray[]){
+    buttonArray[floor*3 + buttonType] = 0;
+}

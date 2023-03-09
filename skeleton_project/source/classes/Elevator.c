@@ -10,17 +10,19 @@ Elevator makeElevator(){
 }
 
 void initiateElevator(Elevator* elevator){
-    if(elevio_floorSensor() != -1){
-        elevator->currentFloor = (Floor)elevio_floorSensor();
+    int sensorValue = elevio_floorSensor();
+    if(sensorValue != -1){
+        elevator->currentFloor = (Floor)sensorValue;
         return;
     }
 
     elevio_motorDirection(DIRN_DOWN);
 
     while(1){
-        if(elevio_floorSensor() != -1){
+        int sensorValue = elevio_floorSensor();
+        if(sensorValue != -1){
             elevio_motorDirection(DIRN_STOP);
-            elevator->currentFloor = (Floor)elevio_floorSensor();
+            elevator->currentFloor = (Floor)sensorValue;
             return;
         }
     }

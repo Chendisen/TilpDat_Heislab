@@ -4,6 +4,9 @@
 #include "../driver/elevio.h"
 #include "Order.h"
 
+Bool checkButtonPressed(int floor, int buttonType, int buttonArray[]);
+void setButtonPressed(int floor, int buttonType, int buttonArray[]);
+void clearButtonPressed(int floor, int buttonType, int buttonArray[]);
 
 typedef struct Node{
     Order thisOrder;
@@ -12,4 +15,3 @@ typedef struct Node{
 
 void insertAtNth(Node** head, Order newOrder, int n);
 Bool removeFirstNode(Node** head);
-void clearList(Node** head); 
