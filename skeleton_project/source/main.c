@@ -105,14 +105,14 @@ int main(){
         }
 
         if (elevio_obstruction() == 1){ // Checks if obstruction is set
-            doorHandler.obstruction == TRUE;
+            doorHandler.obstruction = TRUE;
 
             if(doorHandler.currentDoorState == OPEN){ // If door is open at the same time, the timer resets
                 resetTimer(&timer);
             }
         }
         if (elevio_obstruction() == 0){
-            doorHandler.obstruction == FALSE;
+            doorHandler.obstruction = FALSE;
         }
 
         if(checkTimer(&timer) == TRUE){ // Cheks if timer has run out and resets it if it has
