@@ -17,4 +17,5 @@ void setCurrentFloor(Elevator* elevatorPtr, Floor floor);
 void setDesiredFloor(Elevator* elevatorPtr, Floor floor);
 void startEmergency(Elevator* elevatorPtr);
 void setMotorDirection(Elevator* elevatorPtr);
+void emergencyStop(Elevator* elevatorPtr);
  
