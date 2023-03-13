@@ -122,7 +122,7 @@ int main(){
             doorHandler.obstruction = FALSE;
         }
 
-        if(checkTimer(&timer) == TRUE && elevio_obstruction() == 0){ // Cheks if timer has run out and resets it if it has
+        if(checkTimer(&timer) == TRUE && elevio_obstruction() == 0 && emergencyTriggered == FALSE){ // Cheks if timer has run out and resets it if it has
             closeDoor(&doorHandler);
             printf("0\n");
             lightsOff(&currentOrder->thisOrder);
