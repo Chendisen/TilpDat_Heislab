@@ -106,6 +106,7 @@ int main(){
 
         if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && doorHandler.currentDoorState == CLOSED){ // In desired floor and door is closed
             openDoor(&doorHandler);
+            lightsOff(&currentOrder->thisOrder);
             startTimer(&timer);
             setMotorDirection(&elevator); // Stops motor
             //timerStarted = TRUE;
@@ -122,10 +123,13 @@ int main(){
             doorHandler.obstruction = FALSE;
         }
 
+        //printf("%d \n", (int)checkTimer(&timer));
+        //printf("%d \n", elevio_obstruction());
+
         if(checkTimer(&timer) == TRUE && elevio_obstruction() == 0 && emergencyTriggered == FALSE){ // Cheks if timer has run out and resets it if it has
-            closeDoor(&doorHandler);
+            
             printf("0\n");
-            lightsOff(&currentOrder->thisOrder);
+            closeDoor(&doorHandler);
             printf("1\n");
             clearButtonPressed((int)currentOrder->thisOrder.floor, (int)currentOrder->thisOrder.buttonType, buttonArray); // Sets the button to 0 in button array
             printf("2\n");
