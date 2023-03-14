@@ -1,5 +1,6 @@
 #include "OrderHandler.h"
 
+
 void insertAtNth(Node** head, Order newOrder, int n){
     Node* newNode = (Node*)malloc(sizeof(Node));
     newNode->thisOrder = newOrder;
@@ -64,4 +65,80 @@ void setButtonPressed(int floor, int buttonType, int buttonArray[]){
 
 void clearButtonPressed(int floor, int buttonType, int buttonArray[]){
     buttonArray[floor*3 + buttonType] = 0;
+}
+
+int sortOrder(Elevator elevator, Order order, int buttonArray[]){
+    Floor orderFloor = order.floor;
+    Floor currentFloor = elevator.currentFloor;
+
+    ButtonType buttonType = order.buttonType; 
+    MotorDirection motorDirection = elevator.direction;
+
+    int numberOfOrders = 0;
+
+    for(int i = 0; i < 12; i++){
+        numberOfOrders += buttonArray[i];
+    }
+
+    if(numberOfOrders == 0){
+        return (-1);
+    }
+
+    int n = (-1);
+
+    if(motorDirection == DIRN_UP){
+
+        if((buttonType == BUTTON_HALL_UP || buttonType == BUTTON_CAB) && (orderFloor > currentFloor)){
+
+            int upCabButtonsAbove = 0;
+            int downButtons = 0;
+            int upCabButtonsBelowCurent = 0;
+
+            for(int i = 0; i < 12; i++){
+                if((i%3 == 0 || i%3 == 2) && (i > orderFloor * 3 + 2)){
+                    upCabButtonsAbove += buttonArray[i];
+                }
+                if(i%3 == 1){
+                    downButtons += buttonArray[i];
+                }
+                if((i%3 == 0 || i%3 == 2) && ( i < currentFloor*3 + 3)){
+                    upCabButtonsBelowCurent += buttonArray[i];
+                } 
+            }   
+
+            n = numberOfOrders - upCabButtonsAbove - upCabButtonsBelowCurent - downButtons;
+        }
+
+        else if(((buttonType == BUTTON_HALL_DOWN) || (buttonType == BUTTON_CAB)) && (orderFloor < currentFloor)){
+
+            int upButtonsBelowCurrent = 0;
+            int downCabButtonsBelowOrder = 0;
+
+            for(int i = 0; i < 12; i++){
+                if((i%3 == 0) && (i < currentFloor * 3 + 3)){
+                    upButtonsBelowCurrent += buttonArray[i];
+                }
+                if((i%3 == 1 || i%3 == 2) && (i < orderFloor * 3)){
+                    downCabButtonsBelowOrder += buttonArray[i];
+                }
+            }   
+
+            n = numberOfOrders - upButtonsBelowCurrent - downCabButtonsBelowOrder;
+        }
+
+        else if(buttonType == BUTTON_HALL_UP && orderFloor <= currentFloor){
+
+            int upButtonsAboveOrder = 0;
+
+            for(int i = 0; i < 12; i++){
+                if((i%3 == 0) && (i > orderFloor * 3 + 2) && (i < currentFloor * 3 + 3)){
+                    upButtonsAboveOrder += buttonArray[i];
+                }
+            }   
+
+            n = numberOfOrders - upButtonsAboveOrder;
+        }
+    }    
+
+    return n;
 }
