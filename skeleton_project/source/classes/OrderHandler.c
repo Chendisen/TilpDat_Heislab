@@ -11,7 +11,7 @@ void insertAtNth(Node** head, Order newOrder, int n){
         return;
     }
 
-    if(n == 1){
+    if(n == 1 || n == 0){
         newNode->next = *head;
         *head = newNode;
         return;
@@ -84,9 +84,18 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[]){
         return (-1);
     }
 
+    printf("MotorDir: %d\n", (int)motorDirection);
+    printf("ButtonType: %d\n", (int)buttonType);
+    printf("CurrentFloor: %d\n", (int)currentFloor);
+    printf("OrderFloor: %d\n", (int)orderFloor);
+    printf("NumberOfOrders: %d\n", (int)numberOfOrders);
+
+
     int n = (-1);
 
-    if(motorDirection == DIRN_UP){
+    if((int)motorDirection == (int)DIRN_UP){
+
+        printf("inside first if\n");
 
         if((buttonType == BUTTON_HALL_UP || buttonType == BUTTON_CAB) && (orderFloor > currentFloor)){
 
@@ -106,7 +115,14 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[]){
                 } 
             }   
 
+            printf("upCabAbove: %d\n", (int)upCabButtonsAbove);
+            printf("DownButtons: %d\n", (int)downButtons);
+            printf("upCabBelowCurrent: %d\n", (int)upCabButtonsBelowCurent);
+
             n = numberOfOrders - upCabButtonsAbove - upCabButtonsBelowCurent - downButtons;
+
+            printf("N: %d\n", (int)n);
+
         }
 
         else if(((buttonType == BUTTON_HALL_DOWN) || (buttonType == BUTTON_CAB)) && (orderFloor < currentFloor)){
@@ -139,6 +155,8 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[]){
             n = numberOfOrders - upButtonsAboveOrder;
         }
     }    
+
+    printf("%d\n", n);
 
     return n;
 }
