@@ -11,7 +11,7 @@ void insertAtNth(Node** head, Order newOrder, int n){
         return;
     }
 
-    if(n == 1 || n == 0){
+    if(n == 0){
         newNode->next = *head;
         *head = newNode;
         return;
@@ -30,7 +30,7 @@ void insertAtNth(Node** head, Order newOrder, int n){
         }
     }
     
-    for(int i = 1; i < n-1; i++){
+    for(int i = 0; i < n-1; i++){
         if (temp->next == NULL) {
             printf("Error: Invalid position\n");
             return;
