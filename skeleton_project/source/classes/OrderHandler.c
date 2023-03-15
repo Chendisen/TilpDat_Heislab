@@ -104,13 +104,13 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[]){
             int upCabButtonsBelowCurent = 0;
 
             for(int i = 0; i < 12; i++){
-                if((i%3 == 1 || i%3 == 2) && (i > orderFloor * 3 + 2)){
+                if((i%3 == 0 || i%3 == 2) && (i > orderFloor * 3 + 2)){
                     upCabButtonsAbove += buttonArray[i];
                 }
-                if(i%3 == 0){
+                if(i%3 == 1){
                     downButtons += buttonArray[i];
                 }
-                if((i%3 == 1 || i%3 == 2) && ( i < currentFloor*3 + 3)){
+                if((i%3 == 0 || i%3 == 2) && ( i < currentFloor*3 + 3)){
                     upCabButtonsBelowCurent += buttonArray[i];
                 } 
             }   
@@ -131,10 +131,10 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[]){
             int downCabButtonsBelowOrder = 0;
 
             for(int i = 0; i < 12; i++){
-                if((i%3 == 1) && (i < currentFloor * 3 + 3)){
+                if((i%3 == 0) && (i < currentFloor * 3 + 3)){
                     upButtonsBelowCurrent += buttonArray[i];
                 }
-                if((i%3 == 0 || i%3 == 2) && (i < orderFloor * 3)){
+                if((i%3 == 1 || i%3 == 2) && (i < orderFloor * 3)){
                     downCabButtonsBelowOrder += buttonArray[i];
                 }
             }   
@@ -147,7 +147,7 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[]){
             int upButtonsAboveOrder = 0;
 
             for(int i = 0; i < 12; i++){
-                if((i%3 == 1) && (i > orderFloor * 3 + 2) && (i < currentFloor * 3 + 3)){
+                if((i%3 == 0) && (i > orderFloor * 3 + 2) && (i < currentFloor * 3 + 3)){
                     upButtonsAboveOrder += buttonArray[i];
                 }
             }   

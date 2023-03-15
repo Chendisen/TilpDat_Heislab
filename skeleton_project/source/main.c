@@ -73,7 +73,7 @@ int main(){
         }
 
         for(int floor = (int)FIRST; floor <= (int)FOURTH; floor++){ //Iterating through all the buttons
-            for(int buttonType = BUTTON_HALL_DOWN; buttonType <= BUTTON_CAB; buttonType++){
+            for(int buttonType = BUTTON_HALL_UP; buttonType <= BUTTON_CAB; buttonType++){
                 if(elevio_callButton(floor, buttonType) && checkButtonPressed(floor, buttonType, buttonArray) == FALSE){ //Checks if a button is pushed
                     Order newOrder = makeOrder(buttonType, floor); //Makes a new order with correct floor and button type
                     lightsOn(&newOrder);  //Turns on the button lights for the order
