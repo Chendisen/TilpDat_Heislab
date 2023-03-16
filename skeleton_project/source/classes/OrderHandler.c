@@ -84,13 +84,6 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[], Node* currentOr
         return (-1);
     }
 
-    printf("MotorDir: %d\n", (int)motorDirection);
-    printf("ButtonType: %d\n", (int)buttonType);
-    printf("CurrentFloor: %d\n", (int)currentFloor);
-    printf("OrderFloor: %d\n", (int)orderFloor);
-    printf("NumberOfOrders: %d\n", (int)numberOfOrders);
-
-
     int n = (-1);
 
     if((int)motorDirection == (int)DIRN_UP){
@@ -171,8 +164,6 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[], Node* currentOr
 
     else if((int)motorDirection == (int)DIRN_DOWN){
 
-        DOWN:
-
         printf("inside second if\n");
 
         if((buttonType == BUTTON_HALL_DOWN || buttonType == BUTTON_CAB) && (orderFloor < currentFloor)){
@@ -243,23 +234,172 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[], Node* currentOr
         }
 
         return n;
-    }    
+    }  
+
+
+    //########### DIRN STOP ############  
 
     else if(motorDirection == DIRN_STOP){
         printf("Inside third if\n");
 
         Node* temp = currentOrder->next;
+        int ordersAtFloor = 1;
+
         while(temp != NULL){
             Floor tmpFloor = temp->thisOrder.floor;
 
+            //DIRN UP
+
             if(tmpFloor > currentFloor){
-                goto UP;
+                
+                if((buttonType == BUTTON_HALL_UP || buttonType == BUTTON_CAB) && (orderFloor > currentFloor)){
+
+                    int upCabButtonsAboveOrder = 0;
+                    int downButtons = 0;
+                    int upCabButtonsBelowCurrent = 0;
+
+                    for(int i = 0; i < 12; i++){
+                        if((i%3 == 0 || i%3 == 2) && (i > orderFloor * 3 + 2)){
+                            upCabButtonsAboveOrder += buttonArray[i];
+                        }
+                        if(i%3 == 1){
+                            downButtons += buttonArray[i];
+                        }
+                        if((i%3 == 0 || i%3 == 2) && ( i < currentFloor * 3 + 3)){
+                            upCabButtonsBelowCurrent += buttonArray[i];
+                        } 
+                    }   
+
+                    n = numberOfOrders - upCabButtonsAboveOrder - upCabButtonsBelowCurrent - downButtons + ordersAtFloor;
+                }
+
+                else if(((buttonType == BUTTON_HALL_DOWN) || (buttonType == BUTTON_CAB)) && (orderFloor <= currentFloor)){
+
+                    int upButtonsBelowCurrent = 0;
+                    int downCabButtonsBelowOrder = 0;
+
+                    for(int i = 0; i < 12; i++){
+                        if((i%3 == 0) && (i < currentFloor * 3 + 3)){
+                            upButtonsBelowCurrent += buttonArray[i];
+                        }
+                        if((i%3 == 1 || i%3 == 2) && (i < orderFloor * 3)){
+                            downCabButtonsBelowOrder += buttonArray[i];
+                        }
+                    }   
+
+                    n = numberOfOrders - upButtonsBelowCurrent - downCabButtonsBelowOrder + ordersAtFloor;
+                }
+
+                else if(buttonType == BUTTON_HALL_UP && orderFloor <= currentFloor){
+
+                    int upButtonsAboveOrder = 0;
+
+                    for(int i = 0; i < 12; i++){
+                        if((i%3 == 0) && (i > orderFloor * 3 + 2) && (i < currentFloor * 3 + 3) && (i > (int)orderFloor * 3 + 2)){
+                            upButtonsAboveOrder += buttonArray[i];
+                        }
+                    }   
+
+                    n = numberOfOrders - upButtonsAboveOrder + ordersAtFloor;
+                }
+
+                else if(buttonType == BUTTON_HALL_DOWN && orderFloor > currentFloor){
+                    int downButtonBelowOrder = 0;
+                    int upCabButtonBelowCurrent = 0;
+
+                    for(int i = 0; i < 12; i++){
+                        if((i%3 == 1) && (i < orderFloor * 3)){
+                            downButtonBelowOrder += buttonArray[i];
+                        }
+                        if((i%3 == 0 || i%3 == 2) && (i < currentFloor * 3 + 3)){
+                            upCabButtonBelowCurrent += buttonArray[i];
+                        }
+                    }   
+
+                    n = numberOfOrders - downButtonBelowOrder - upCabButtonBelowCurrent + ordersAtFloor;
+                }
+
+                return n;
             }
+            
+            //DIRN DOWN
+
             else if(tmpFloor < currentFloor){
-                goto DOWN;
+                if((buttonType == BUTTON_HALL_DOWN || buttonType == BUTTON_CAB) && (orderFloor < currentFloor)){
+
+                    int downCabButtonsBelowOrder = 0;
+                    int upButtons = 0;
+                    int downCabButtonsAboveCurrent = 0;
+
+                    for(int i = 0; i < 12; i++){
+                        if((i%3 == 1 || i%3 == 2) && (i < orderFloor * 3)){
+                            downCabButtonsBelowOrder += buttonArray[i];
+                        }
+                        if(i%3 == 0){
+                            upButtons += buttonArray[i];
+                        }
+                        if((i%3 == 1 || i%3 == 2) && ( i > currentFloor*3 - 1)){
+                            downCabButtonsAboveCurrent += buttonArray[i];
+                        } 
+                    }   
+
+                    n = numberOfOrders - downCabButtonsAboveCurrent - downCabButtonsBelowOrder - upButtons + ordersAtFloor;
+                }
+
+                else if(((buttonType == BUTTON_HALL_UP) || (buttonType == BUTTON_CAB)) && (orderFloor >= currentFloor)){
+
+                    int downButtonsAboveCurrent = 0;
+                    int upCabButtonsAboveOrder = 0;
+
+                    for(int i = 0; i < 12; i++){
+                        if((i%3 == 1) && (i > currentFloor * 3 - 1)){
+                            downButtonsAboveCurrent += buttonArray[i];
+                        }
+                        if((i%3 == 0 || i%3 == 2) && (i > orderFloor * 3 + 2)){
+                            upCabButtonsAboveOrder += buttonArray[i];
+                        }
+                    }   
+
+                    n = numberOfOrders - downButtonsAboveCurrent - upCabButtonsAboveOrder + ordersAtFloor;
+                }
+
+                else if(buttonType == BUTTON_HALL_DOWN && orderFloor >= currentFloor){
+
+                    int downButtonsBelowOrder = 0;
+
+                    for(int i = 0; i < 12; i++){
+                        if((i%3 == 0) && (i > orderFloor * 3 + 2) && (i > currentFloor * 3 - 1) && (i < orderFloor * 3)){
+                            downButtonsBelowOrder += buttonArray[i];
+                        }
+                    }   
+
+                    n = numberOfOrders - downButtonsBelowOrder + ordersAtFloor;
+                }
+
+                else if(buttonType == BUTTON_HALL_UP && orderFloor < currentFloor){
+                    int upButtonAboveOrder = 0;
+                    int downCabButtonAboveCurrent = 0;
+
+                    for(int i = 0; i < 12; i++){
+                        if((i%3 == 0) && (i > orderFloor * 3 + 2)){
+                            upButtonAboveOrder += buttonArray[i];
+                        }
+                        if((i%3 == 1 || i%3 == 2) && (i > currentFloor * 3 - 1)){
+                            downCabButtonAboveCurrent += buttonArray[i];
+                        }
+                    }   
+
+                    n = numberOfOrders - upButtonAboveOrder - downCabButtonAboveCurrent + ordersAtFloor;
+                }
+
+                return n;
             }
+
+            //CONTINUE
+
             else{
                 temp = temp->next;
+                ordersAtFloor++;
             }
         }
 

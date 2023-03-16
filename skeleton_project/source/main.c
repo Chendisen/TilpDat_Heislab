@@ -135,15 +135,15 @@ int main(){
         }
 
         if(elevio_obstruction() == 0 && emergencyTriggered == FALSE && checkTimer(&timer) == TRUE){ // Cheks if timer has run out and resets it if it has
-            printf("0\n");
+
             closeDoor(&doorHandler);
-            printf("2\n");
+
             Floor check = currentOrder->thisOrder.floor;
             while(currentOrder != NULL && currentOrder->thisOrder.floor == check){
                 clearButtonPressed((int)currentOrder->thisOrder.floor, (int)currentOrder->thisOrder.buttonType, buttonArray);
                 removeFirstNode(&currentOrder);
             }
-            printf("3\n");
+
             //timerStarted = FALSE;
         }
 
