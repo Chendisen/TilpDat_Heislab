@@ -77,7 +77,7 @@ int main(){
                 if(elevio_callButton(floor, buttonType) && checkButtonPressed(floor, buttonType, buttonArray) == FALSE){ //Checks if a button is pushed
                     Order newOrder = makeOrder(buttonType, floor); //Makes a new order with correct floor and button type
                     lightsOn(&newOrder);  //Turns on the button lights for the order
-                    int n = sortOrder(elevator, newOrder, buttonArray); // Finds which spot the order should be placed 
+                    int n = sortOrder(elevator, newOrder, buttonArray, currentOrder); // Finds which spot the order should be placed 
                     insertAtNth(&currentOrder, newOrder, n); // Adds the new orders to the list
                     setButtonPressed(floor, buttonType, buttonArray);
                     printf("Order is received\n");

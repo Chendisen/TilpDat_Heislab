@@ -16,4 +16,4 @@ typedef struct Node{
 
 void insertAtNth(Node** head, Order newOrder, int n);
 Bool removeFirstNode(Node** head);
-int sortOrder(Elevator elevator, Order order, int buttonArray[]);
+int sortOrder(Elevator elevator, Order order, int buttonArray[], Node* currentOrder);
