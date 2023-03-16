@@ -67,8 +67,9 @@ int main(){
                 }
                 emergencyTriggered = TRUE;
             }
-            emergencyIteration++;
 
+            startTimer(&timer);
+            emergencyIteration++;
         }
 
         for(int floor = (int)FIRST; floor <= (int)FOURTH; floor++){ //Iterating through all the buttons
@@ -76,7 +77,8 @@ int main(){
                 if(elevio_callButton(floor, buttonType) && checkButtonPressed(floor, buttonType, buttonArray) == FALSE){ //Checks if a button is pushed
                     Order newOrder = makeOrder(buttonType, floor); //Makes a new order with correct floor and button type
                     lightsOn(&newOrder);  //Turns on the button lights for the order
-                    insertAtNth(&currentOrder, newOrder, -1); // Adds the new orders to the list
+                    int n = sortOrder(elevator, newOrder, buttonArray); // Finds which spot the order should be placed 
+                    insertAtNth(&currentOrder, newOrder, n); // Adds the new orders to the list
                     setButtonPressed(floor, buttonType, buttonArray);
                     printf("Order is received\n");
                 }
@@ -84,10 +86,6 @@ int main(){
         }
 
         if(emergencyTriggered == TRUE && currentOrder != NULL){ // If we just had an emergency and we now have a new order 
-            if(elevio_floorSensor() != -1 && doorHandler.currentDoorState == OPEN){ // Starts timer if we're in a floor and door is open. 
-                startTimer(&timer);
-                //timerStarted = TRUE;
-            }
             initiateElevator(&elevator); // Gets elevator to known state, nothing happens if we're already in known state
             floorLightsOn(elevator.currentFloor, &floorLight); 
             emergencyTriggered = FALSE;
@@ -106,6 +104,7 @@ int main(){
 
         if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && doorHandler.currentDoorState == CLOSED){ // In desired floor and door is closed
             openDoor(&doorHandler);
+            lightsOff(&currentOrder->thisOrder);
             startTimer(&timer);
             setMotorDirection(&elevator); // Stops motor
             //timerStarted = TRUE;
@@ -122,10 +121,17 @@ int main(){
             doorHandler.obstruction = FALSE;
         }
 
-        if(checkTimer(&timer) == TRUE && elevio_obstruction() == 0 && emergencyTriggered == FALSE){ // Cheks if timer has run out and resets it if it has
+        //printf("%d \n", (int)checkTimer(&timer));
+        //printf("%d \n", elevio_obstruction());
+
+        if(elevio_obstruction() == 0 && emergencyTriggered == TRUE && checkTimer(&timer) == TRUE){
             closeDoor(&doorHandler);
+            emergencyTriggered = FALSE;
+        }
+
+        if(elevio_obstruction() == 0 && emergencyTriggered == FALSE && checkTimer(&timer) == TRUE){ // Cheks if timer has run out and resets it if it has
             printf("0\n");
-            lightsOff(&currentOrder->thisOrder);
+            closeDoor(&doorHandler);
             printf("1\n");
             clearButtonPressed((int)currentOrder->thisOrder.floor, (int)currentOrder->thisOrder.buttonType, buttonArray); // Sets the button to 0 in button array
             printf("2\n");

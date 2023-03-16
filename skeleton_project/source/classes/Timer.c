@@ -2,7 +2,7 @@
 
 Timer makeTimer(int seconds){
     Timer newTimer;
-    newTimer.seconds = seconds * 180000;
+    newTimer.seconds = seconds*10800;
     newTimer.startTime = 0.0;
 
     return newTimer;
