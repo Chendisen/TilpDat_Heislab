@@ -104,7 +104,12 @@ int main(){
 
         if(currentOrder != NULL && elevator.currentFloor == elevator.desiredFloor && doorHandler.currentDoorState == CLOSED){ // In desired floor and door is closed
             openDoor(&doorHandler);
-            lightsOff(&currentOrder->thisOrder);
+            Floor check = currentOrder->thisOrder.floor;
+            Node* temp = currentOrder;
+            while(temp->thisOrder.floor == check){
+                lightsOff(&temp->thisOrder);
+                temp = temp->next;
+            }
             startTimer(&timer);
             setMotorDirection(&elevator); // Stops motor
             //timerStarted = TRUE;
