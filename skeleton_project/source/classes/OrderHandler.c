@@ -125,7 +125,7 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[]){
 
         }
 
-        else if(((buttonType == BUTTON_HALL_DOWN) || (buttonType == BUTTON_CAB)) && (orderFloor < currentFloor)){
+        else if(((buttonType == BUTTON_HALL_DOWN) || (buttonType == BUTTON_CAB)) && (orderFloor <= currentFloor)){
 
             int upButtonsBelowCurrent = 0;
             int downCabButtonsBelowOrder = 0;
@@ -154,6 +154,8 @@ int sortOrder(Elevator elevator, Order order, int buttonArray[]){
 
             n = numberOfOrders - upButtonsAboveOrder;
         }
+
+        
     }    
 
     printf("%d\n", n);

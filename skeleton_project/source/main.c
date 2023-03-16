@@ -132,10 +132,12 @@ int main(){
         if(elevio_obstruction() == 0 && emergencyTriggered == FALSE && checkTimer(&timer) == TRUE){ // Cheks if timer has run out and resets it if it has
             printf("0\n");
             closeDoor(&doorHandler);
-            printf("1\n");
-            clearButtonPressed((int)currentOrder->thisOrder.floor, (int)currentOrder->thisOrder.buttonType, buttonArray); // Sets the button to 0 in button array
             printf("2\n");
-            removeFirstNode(&currentOrder);
+            Floor check = currentOrder->thisOrder.floor;
+            while(currentOrder->thisOrder.floor == check){
+                clearButtonPressed((int)currentOrder->thisOrder.floor, (int)currentOrder->thisOrder.buttonType, buttonArray);
+                removeFirstNode(&currentOrder);
+            }
             printf("3\n");
             //timerStarted = FALSE;
         }
@@ -145,7 +147,7 @@ int main(){
 
     //HEi CHRS
 
-    
+
     /*
     elevio_motorDirection(DIRN_UP);
 
