@@ -106,7 +106,7 @@ int main(){
             openDoor(&doorHandler);
             Floor check = currentOrder->thisOrder.floor;
             Node* temp = currentOrder;
-            while(currentOrder!= NULL && temp->thisOrder.floor == check){
+            while(temp != NULL && temp->thisOrder.floor == check){
                 lightsOff(&temp->thisOrder);
                 temp = temp->next;
             }
@@ -139,7 +139,7 @@ int main(){
             closeDoor(&doorHandler);
             printf("2\n");
             Floor check = currentOrder->thisOrder.floor;
-            while(currentOrder!= NULL && currentOrder->thisOrder.floor == check){
+            while(currentOrder != NULL && currentOrder->thisOrder.floor == check){
                 clearButtonPressed((int)currentOrder->thisOrder.floor, (int)currentOrder->thisOrder.buttonType, buttonArray);
                 removeFirstNode(&currentOrder);
             }
